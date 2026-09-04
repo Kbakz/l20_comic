@@ -1,0 +1,23 @@
+FONTES USADAS:
+
+EXO 2 - da pra baixar pelo DaFont
+Poppins - da pra baixar pelo Google fonts
+
+CORES: 
+
+Fundo: preto absoluto (#000000)
+
+Textos: branco absoluto (#ffffff)
+
+Fundo do cabeçalho e demais elementos flutuantes: (#0d0e12)
+
+Bordas desses elementos: (#191a1e)
+
+Amarelo utilizado: (#ffd600)
+
+Cinza do botão de download/continuar/placehouding/pop up do AD: (#262934)
+
+AD desativado: cinza (#4a4a4d)
+
+Verde do “em destaque”: fundo (#39ff14)
+texto (#153c0d)
