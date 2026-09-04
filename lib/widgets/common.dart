@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:l20_comic/models/comic.dart';
 
-const Color appYellow = Color(0xFFFFD21F);
-const Color appSurface = Color(0xFF101116);
-const Color appSurfaceAlt = Color(0xFF1A1D26);
+const Color appYellow = Color(0xFFFFD600);
+const Color appSurface = Color.fromARGB(255, 255, 1, 213);
+const Color appSurfaceAlt = Color.fromARGB(255, 0, 64, 255);
 const Color appMuted = Color(0xFF9A9CA6);
 
 class Logo extends StatelessWidget {
