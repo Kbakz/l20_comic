@@ -3,9 +3,11 @@ import 'package:l20_comic/models/comic.dart';
 
 const Color appYellow = Color(0xFFFFD600);
 const Color appSurface = Color(0xFF0d0e12);
-const Color appSurfaceAlt = Color(0xFF191A1E);
+const Color appSurfaceAlt = Color(0xFF191a1e);
+const Color appCinza = Color(0xFF262934);
 const Color appMuted = Color(0xFF4a4a4d);
-const Color appDestaque = Color(0xFF39FF14);
+const Color appDestaqueBg = Color(0xFF39FF14);
+const Color appDestaqueText = Color(0xFF0d0e12);
 
 class Logo extends StatelessWidget {
   const Logo({super.key});
@@ -95,10 +97,11 @@ class SectionTitle extends StatelessWidget {
 }
 
 class Label extends StatelessWidget {
-  const Label({super.key, required this.text, required this.color});
+  const Label({super.key, required this.text, required this.color, this.textColor = Colors.black});
 
   final String text;
   final Color color;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +113,8 @@ class Label extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.black,
+        style: TextStyle(
+          color: textColor,
           fontSize: 10,
           fontWeight: FontWeight.w900,
         ),
@@ -176,10 +179,16 @@ class CoverImage extends StatelessWidget {
 }
 
 class FeaturedCard extends StatelessWidget {
-  const FeaturedCard({super.key, required this.comic, required this.onRead});
+  const FeaturedCard({
+    super.key,
+    required this.comic,
+    required this.onRead,
+    this.onDownload,
+  });
 
   final Comic comic;
   final VoidCallback onRead;
+  final VoidCallback? onDownload;
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +209,7 @@ class FeaturedCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Label(text: 'EM DESTAQUE', color: Colors.greenAccent),
+                  const Label(text: 'EM DESTAQUE', color: appDestaqueBg, textColor: appDestaqueText),
                   const SizedBox(height: 16),
                   Text(
                     comic.title.toUpperCase(),
@@ -216,35 +225,72 @@ class FeaturedCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       comic.description,
-                      style: const TextStyle(color: appMuted, height: 1.45, fontSize: 12),
+                      style: const TextStyle(color: Colors.white, height: 1.45, fontSize: 12),
                     ),
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.menu_book_outlined, size: 16, color: appMuted),
+                      const Icon(Icons.menu_book_outlined, size: 16, color: Colors.white),
                       const SizedBox(width: 5),
-                      Text('${comic.pages} páginas', style: const TextStyle(color: appMuted, fontSize: 11)),
+                      Text('${comic.pages} páginas', style: const TextStyle(color: Colors.white, fontSize: 11)),
                       const SizedBox(width: 12),
-                      const Icon(Icons.schedule, size: 16, color: appMuted),
+                      const Icon(Icons.schedule, size: 16, color: Colors.white),
                       const SizedBox(width: 5),
-                      Text('${comic.minutes} min', style: const TextStyle(color: appMuted, fontSize: 11)),
+                      Text('${comic.minutes} min', style: const TextStyle(color: Colors.white, fontSize: 11)),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  SizedBox(
-                    height: 46,
-                    child: ElevatedButton.icon(
-                      onPressed: onRead,
-                      icon: const Icon(Icons.menu_book, size: 18),
-                      label: const Text('LER AGORA'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: appYellow,
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 46,
+                          child: ElevatedButton(
+                            onPressed: onRead,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: appYellow,
+                              foregroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text('LER AGORA'),
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.menu_book, size: 18),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      SizedBox(
+                        height: 46,
+                        width: 46,
+                        child: OutlinedButton(
+                          onPressed: onDownload,
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: appSurfaceAlt,
+                            foregroundColor: appYellow,
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: const Icon(
+                            Icons.download_rounded,
+                            color: appYellow,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
