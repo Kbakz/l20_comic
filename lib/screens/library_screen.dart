@@ -44,7 +44,7 @@ class LibraryScreen extends StatelessWidget {
                 const SizedBox(height: 5),
                 const Text(
                   'Todas as suas histórias em um só lugar',
-                  style: TextStyle(color: appMuted),
+                  style: TextStyle(color: Colors.white),
                 ),
                 const SizedBox(height: 18),
                 TextField(

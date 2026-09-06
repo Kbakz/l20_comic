@@ -81,7 +81,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
           ),
           Text(
             'Página $page / ${widget.comic.pages}',
-            style: const TextStyle(color: appMuted),
+            style: const TextStyle(color: Colors.white),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),

@@ -49,7 +49,7 @@ class _L20AppState extends State<L20App> {
           seedColor: appYellow,
           brightness: Brightness.dark,
         ),
-        fontFamily: 'Arial',
+        fontFamily: 'Poppins',
         splashFactory: InkRipple.splashFactory,
       ),
       home: Scaffold(

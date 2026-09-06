@@ -19,7 +19,7 @@ class AdminScreen extends StatelessWidget {
           const SizedBox(height: 6),
           const Text(
             'Cadastre e organize o catálogo da L20 Comics.',
-            style: TextStyle(color: appMuted),
+            style: TextStyle(color: Colors.white),
           ),
           const SizedBox(height: 22),
           FilledButton.icon(
@@ -45,7 +45,7 @@ class AdminScreen extends StatelessWidget {
                 title: Text(comic.title),
                 subtitle: Text(
                   '${comic.pages} páginas • ${comic.genre}',
-                  style: const TextStyle(color: appMuted, fontSize: 11),
+                  style: const TextStyle(color: Colors.white, fontSize: 11),
                 ),
                 trailing: PopupMenuButton<String>(
                   onSelected: (value) {

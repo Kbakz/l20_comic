@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const Text(
                   'lone@l20comics.com',
-                  style: TextStyle(color: appMuted),
+                  style: TextStyle(color: Colors.white),
                 ),
               ],
             ),
