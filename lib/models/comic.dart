@@ -26,7 +26,7 @@ class Comic {
 // Catálogo inicial usado pela home, livraria e perfil.
 const comics = [
   Comic(
-    title: 'Páginas do Tempo:\nCrônicas da liberdade',
+    title: 'Páginas do Tempo',
     author: 'Estalone Lima',
     genre: 'História • Aventura',
     pages: 60,

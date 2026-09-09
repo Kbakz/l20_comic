@@ -8,47 +8,6 @@ const Color appSurface = Color(0xFF0d0e12);
 const Color appSurfaceAlt = Color(0xFF191A1E);
 const Color appMuted = Color(0xFF4a4a4d);
 const Color appDestaque = Color(0xFF39FF14);
-const double appBorderWidth = 1;
-
-class AppPanel extends StatelessWidget {
-  const AppPanel({
-    super.key,
-    required this.child,
-    this.padding = EdgeInsets.zero,
-    this.color = appSurface,
-    this.borderRadius = 16,
-    this.borderWidth = appBorderWidth,
-    this.border,
-    this.boxShadow,
-    this.clipBehavior = Clip.antiAlias,
-  });
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  final Color color;
-  final double borderRadius;
-  final double borderWidth;
-  final Border? border;
-  final List<BoxShadow>? boxShadow;
-  final Clip clipBehavior;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      clipBehavior: clipBehavior,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(borderRadius),
-        border: border ?? Border.all(
-          color: appSurfaceAlt,
-          width: borderWidth,
-        ),
-      ),
-      child: child,
-    );
-  }
-}
 
 class Logo extends StatelessWidget {
   const Logo({super.key});
@@ -89,8 +48,8 @@ class AudioButton extends StatelessWidget {
             : 'Ativar descrição de áudio',
         icon: SvgPicture.asset(
           'assets/icons/icon_audioDescription.svg',
-          width: 37,
-          height: 37,
+          width: 35,
+          height: 35,
           colorFilter: ColorFilter.mode(
             enabled ? appYellow : appMuted,
             BlendMode.srcIn,
@@ -210,18 +169,10 @@ class SectionTitle extends StatelessWidget {
 }
 
 class Label extends StatelessWidget {
-  const Label({
-    super.key,
-    required this.text,
-    required this.color,
-    this.colorText = Colors.black,
-    this.fontSize = 8,
-  });
+  const Label({super.key, required this.text, required this.color});
 
   final String text;
   final Color color;
-  final Color colorText;
-  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -233,9 +184,9 @@ class Label extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(
-          color: colorText,
-          fontSize: fontSize,
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 8,
           fontWeight: FontWeight.w900,
         ),
       ),
@@ -279,7 +230,7 @@ class CoverImage extends StatelessWidget {
         height: double.infinity,
         errorBuilder: (_, _, _) => Container(
           color: appSurfaceAlt,
-          child: const Icon(Icons.auto_stories, color: appGray, size: 40),
+          child: const Icon(Icons.auto_stories, color: appMuted, size: 40),
         ),
         loadingBuilder: (_, child, progress) => progress == null
             ? child
@@ -311,9 +262,15 @@ class FeaturedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
+    return Container(
+      height: 236,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: appSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: appSurfaceAlt),
+      ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             flex: 52,
@@ -322,25 +279,16 @@ class FeaturedCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Label(
-                    text: 'EM DESTAQUE',
-                    color: appDestaque,
-                    colorText: Color(0xFF153c0d),
-                    fontSize: 9,
-                  ),
+                  const Label(text: 'EM DESTAQUE', color: appDestaque),
                   const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      comic.title.toUpperCase(),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                        height: 1.1,
-                        fontWeight: FontWeight.w900,
-                      ),
+                  Text(
+                    comic.title.toUpperCase(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      height: 1.1,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -349,107 +297,83 @@ class FeaturedCard extends StatelessWidget {
                     style: const TextStyle(color: appYellow, fontSize: 9),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    comic.description,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      height: 2,
-                      fontSize: 8.5,
-                      fontWeight: FontWeight.w300,
+                  Expanded(
+                    child: Text(
+                      comic.description,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        height: 1.35,
+                        fontSize: 8.5,
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/icon_book.svg',
-                          width: 10,
-                          height: 10,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.white,
-                            BlendMode.srcIn,
-                          ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.menu_book_outlined,
+                        size: 10,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        '${comic.pages} páginas',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
                         ),
-                        const SizedBox(width: 3),
-                        Text(
-                          ' ${comic.pages} páginas',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
-                          ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.schedule, size: 10, color: Colors.white),
+                      const SizedBox(width: 3),
+                      Text(
+                        '${comic.minutes} min de leitura',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
                         ),
-                        const SizedBox(width: 8),
-                        const Icon(Icons.schedule, size: 10, color: Colors.white),
-                        const SizedBox(width: 3),
-                        Text(
-                          ' ${comic.minutes} min de leitura',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       SizedBox(
-                        height: 35,
-                        child: ElevatedButton(
+                        height: 29,
+                        child: ElevatedButton.icon(
                           onPressed: onRead,
+                          icon: const Icon(Icons.menu_book, size: 13),
+                          label: const Text('LER AGORA'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: appYellow,
                             foregroundColor: Colors.black,
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             textStyle: const TextStyle(
-                              fontSize: 11,
+                              fontSize: 9,
                               fontWeight: FontWeight.w800,
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text('LER AGORA '),
-                              const SizedBox(width: 5),
-                              SvgPicture.asset(
-                                'assets/icons/icon_book.svg',
-                                width: 15,
-                                height: 15,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.black,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                       ),
-                      const Spacer(),
+                      const SizedBox(width: 8),
                       SizedBox(
-                        width: 35,
-                        height: 35,
+                        width: 29,
+                        height: 29,
                         child: Material(
                           color: appGray,
                           borderRadius: BorderRadius.circular(8),
                           child: InkWell(
                             onTap: onDownload,
                             borderRadius: BorderRadius.circular(8),
-                            child: Center(
-                              child: SvgPicture.asset(
-                                'assets/icons/icon_download.svg',
-                                width: 18,
-                                height: 18,
-                                colorFilter: const ColorFilter.mode(
-                                  appYellow,
-                                  BlendMode.srcIn,
-                                ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.download_outlined,
+                                color: appYellow,
+                                size: 16,
                               ),
                             ),
                           ),
@@ -461,68 +385,11 @@ class FeaturedCard extends StatelessWidget {
               ),
             ),
           ),
-            Expanded(
-              flex: 48,
-              child: ClipPath(
-                clipper: _FeaturedCoverClipper(),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CoverImage(url: comic.cover),
-                    CustomPaint(painter: _FeaturedCoverEdgePainter()),
-                  ],
-                ),
-              ),
-            ),
+          Expanded(flex: 48, child: CoverImage(url: comic.cover)),
         ],
       ),
     );
   }
-}
-
-class _FeaturedCoverClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final diagonal = (size.height * .1).clamp(20.0, 32.0);
-
-    return Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width, 0)
-      ..lineTo(size.width, size.height)
-      ..lineTo(diagonal, size.height)
-      ..close();
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-}
-
-class _FeaturedCoverEdgePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final diagonal = (size.height * .1).clamp(20.0, 32.0);
-    final paint = Paint()
-      ..shader = const LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-        colors: [
-          Colors.black,
-          Color(0xCC000000),
-          Colors.transparent,
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, 24, size.height))
-      ..strokeWidth = 16
-      ..strokeCap = StrokeCap.square;
-
-    canvas.drawLine(
-      const Offset(0, 0),
-      Offset(diagonal, size.height),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class ContinueCard extends StatelessWidget {
