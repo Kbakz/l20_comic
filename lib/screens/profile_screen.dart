@@ -59,7 +59,13 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          ContinueCard(comic: comics.first, page: readingPage, onTap: onRead),
+          if (readingPage > 0)
+            ContinueReadingSection(
+              comic: comics.first,
+              readPages: readingPage,
+              onTap: onRead,
+              title: 'Meu histórico',
+            ),
           const SizedBox(height: 20),
           const ListTile(
             leading: Icon(Icons.settings_outlined, color: appYellow),

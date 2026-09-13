@@ -58,6 +58,17 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 22),
+          if (readingPage > 0) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ContinueReadingSection(
+                comic: featured,
+                readPages: readingPage,
+                onTap: () => onRead(featured),
+              ),
+            ),
+            const SizedBox(height: 22),
+          ],
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: AppPanel(
@@ -65,22 +76,9 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (readingPage > 1) ...[
-                    SectionTitle(
-                      title: 'Continue lendo',
-                      action: 'ABRIR',
-                      onTap: () => onRead(featured),
-                    ),
-                    ContinueCard(
-                      comic: featured,
-                      page: readingPage,
-                      onTap: () => onRead(featured),
-                    ),
-                    const SizedBox(height: 24),
-                  ],
                   SectionTitle(
                     title: 'Conheça outras histórias',
-                    action: 'VER TUDO',
+                    action: 'CONHECER',
                   ),
                   const SizedBox(height: 12),
                   SizedBox(

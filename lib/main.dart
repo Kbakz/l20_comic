@@ -22,7 +22,7 @@ class _L20AppState extends State<L20App> {
   // Controle do áudio acessível em todas as telas.
   bool audioEnabled = true;
   // Última página lida para manter o progresso entre telas.
-  int readingPage = 18;
+  int readingPage = comics.first.readPages;
 
   // Abre a tela do leitor com o estado atual do progresso.
   void openReader(Comic comic) {
