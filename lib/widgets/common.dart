@@ -530,29 +530,46 @@ class ContinueCard extends StatelessWidget {
   const ContinueCard({
     super.key,
     required this.comic,
-    required this.page,
+    required this.readPages,
     required this.onTap,
   });
 
   final Comic comic;
-  final int page;
+  final int readPages;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: appSurface,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Row(
+    final progress = (readPages / comic.pages).clamp(0.0, 1.0);
+    final percentage = (progress * 100).round();
+
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 58,
-            height: 75,
-            child: CoverImage(url: comic.cover, radius: 10),
+            width: 45,
+            height: 45,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox.expand(
+                  child: CircularProgressIndicator(
+                    value: progress,
+                    backgroundColor: appSurfaceAlt,
+                    color: appYellow,
+                    strokeWidth: 3,
+                  ),
+                ),
+                Text(
+                  '$percentage%',
+                  style: const TextStyle(
+                    color: appYellow,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -561,30 +578,103 @@ class ContinueCard extends StatelessWidget {
               children: [
                 Text(
                   comic.title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle( fontSize: 11, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 7),
                 Text(
-                  'Página $page de ${comic.pages}',
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                  'Páginas lidas: $readPages de ${comic.pages}',
+                  style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w400),
                 ),
-                const SizedBox(height: 8),
-                ProgressBar(value: page / comic.pages),
               ],
             ),
           ),
           const SizedBox(width: 10),
-          IconButton(
-            onPressed: onTap,
-            icon: const Icon(
-              Icons.play_circle_fill,
-              color: appYellow,
-              size: 34,
+          SizedBox(
+            height: 27,
+            child: ElevatedButton(
+              onPressed: onTap,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: appGray,
+                foregroundColor: appYellow,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                textStyle: const TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w800,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              child: const Text('CONTINUAR'),
             ),
-            tooltip: 'Continuar leitura',
           ),
         ],
-      ),
+    );
+  }
+}
+
+class ContinueReadingSection extends StatelessWidget {
+  const ContinueReadingSection({
+    super.key,
+    required this.comic,
+    required this.readPages,
+    required this.onTap,
+    this.title = 'Sua última leitura',
+  });
+
+  final Comic comic;
+  final int readPages;
+  final VoidCallback onTap;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    if (readPages <= 0) return const SizedBox.shrink();
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.fromLTRB(16, 33, 16, 16),
+          decoration: BoxDecoration(
+            color: appSurface,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: appSurfaceAlt),
+          ),
+          child: ContinueCard(
+            comic: comic,
+            readPages: readPages,
+            onTap: onTap,
+          ),
+        ),
+        Positioned(
+          left: 23,
+          top: 10,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(6),
+                bottomRight: Radius.circular(6),
+              ),
+              border: Border(
+                left: BorderSide(color: appSurfaceAlt),
+                right: BorderSide(color: appSurfaceAlt),
+                bottom: BorderSide(color: appSurfaceAlt),
+              ),
+            ),
+            padding: const EdgeInsets.fromLTRB(7, 0, 7, 3),
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: appYellow,
+                fontSize: 11,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

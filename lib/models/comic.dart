@@ -9,7 +9,7 @@ class Comic {
     required this.cover,
     this.description = '',
     this.featured = false,
-    this.progress = 0,
+    this.readPages = 0,
   });
 
   final String title;
@@ -20,7 +20,7 @@ class Comic {
   final String cover;
   final String description;
   final bool featured;
-  final double progress;
+  final int readPages;
 }
 
 // Catálogo inicial usado pela home, livraria e perfil.
@@ -32,7 +32,7 @@ const comics = [
     pages: 60,
     minutes: 10,
     featured: true,
-    progress: .30,
+    readPages: 34,
     description: 'Acompanhe Bento, um baiano capaz de “viajar no tempo” através das próprias lembranças. Entre momentos marcados por luta, resistência e esperança.',
     cover: 'https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=900&q=85',
   ),
