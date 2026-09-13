@@ -8,7 +8,7 @@ const Color appSurface = Color(0xFF0d0e12);
 const Color appSurfaceAlt = Color(0xFF191A1E);
 const Color appMuted = Color(0xFF4a4a4d);
 const Color appDestaque = Color(0xFF39FF14);
-const double appBorderWidth = 1;
+const double appBorderWidth = 2;
 
 class AppPanel extends StatelessWidget {
   const AppPanel({
@@ -502,17 +502,21 @@ class _FeaturedCoverEdgePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final diagonal = (size.height * .1).clamp(20.0, 32.0);
+    final fadeWidth = 28.0;
     final paint = Paint()
-      ..shader = const LinearGradient(
+      ..shader = LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: [
-          Colors.black,
-          Color(0xCC000000),
+          appSurface,
+          appSurface,
+          appSurface.withValues(alpha: .7),
+          appSurface.withValues(alpha: .2),
           Colors.transparent,
         ],
-      ).createShader(Rect.fromLTWH(0, 0, 24, size.height))
-      ..strokeWidth = 16
+        stops: const [0, .2, .45, .7, 1],
+      ).createShader(Rect.fromLTWH(0, 0, fadeWidth, size.height))
+      ..strokeWidth = 18
       ..strokeCap = StrokeCap.square;
 
     canvas.drawLine(
