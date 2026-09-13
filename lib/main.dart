@@ -23,6 +23,8 @@ class _L20AppState extends State<L20App> {
   bool audioEnabled = true;
   // Última página lida para manter o progresso entre telas.
   int readingPage = comics.first.readPages;
+  // Data e hora da última leitura registrada.
+  DateTime? lastRead = comics.first.lastRead;
 
   // Abre a tela do leitor com o estado atual do progresso.
   void openReader(Comic comic) {
@@ -32,7 +34,10 @@ class _L20AppState extends State<L20App> {
           comic: comic,
           initialPage: comic.featured ? readingPage : 1,
           audioEnabled: audioEnabled,
-          onProgress: (page) => setState(() => readingPage = page),
+          onProgress: (page) => setState(() {
+            readingPage = page;
+            lastRead = DateTime.now();
+          }),
         ),
       ),
     );

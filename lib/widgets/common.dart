@@ -8,7 +8,7 @@ const Color appSurface = Color(0xFF0d0e12);
 const Color appSurfaceAlt = Color(0xFF191A1E);
 const Color appMuted = Color(0xFF4a4a4d);
 const Color appDestaque = Color(0xFF39FF14);
-const double appBorderWidth = 2;
+const double appBorderWidth = 1.3;
 
 class AppPanel extends StatelessWidget {
   const AppPanel({
@@ -644,7 +644,7 @@ class ContinueReadingSection extends StatelessWidget {
           decoration: BoxDecoration(
             color: appSurface,
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: appSurfaceAlt),
+            border: Border.all(color: appSurfaceAlt, width: appBorderWidth),
           ),
           child: ContinueCard(
             comic: comic,
@@ -663,9 +663,9 @@ class ContinueReadingSection extends StatelessWidget {
                 bottomRight: Radius.circular(6),
               ),
               border: Border(
-                left: BorderSide(color: appSurfaceAlt),
-                right: BorderSide(color: appSurfaceAlt),
-                bottom: BorderSide(color: appSurfaceAlt),
+                left: BorderSide(color: appSurfaceAlt, width: appBorderWidth),
+                right: BorderSide(color: appSurfaceAlt, width: appBorderWidth),
+                bottom: BorderSide(color: appSurfaceAlt, width: appBorderWidth),
               ),
             ),
             padding: const EdgeInsets.fromLTRB(7, 0, 7, 3),
